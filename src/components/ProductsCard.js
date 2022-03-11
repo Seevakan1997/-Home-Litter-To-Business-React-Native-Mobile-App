@@ -18,7 +18,7 @@ export default function ProductsCard({
     }){
     
         return(
-            <TouchableOpacity>
+            <TouchableOpacity >
                 <View style ={{...styles.cardView,width:screenWidth}}>
                     <Image 
                         style ={{...styles.image, width:screenWidth}}

@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import {View, Text, StyleSheet, TouchableOpacity,ScrollView,FlatList,Pressable,Image,Dimensions} from 'react-native';
-import { Icon } from 'react-native-elements';
-import HomeHeader from '../components/HomeHeader';
+import { Icon,withBadge } from 'react-native-elements';
 import { colors,parameters } from "../global/Styles";
 import { filterData,recyclableProducts,restaurantsData } from '../global/Data'
 import ProductsCard from "../components/ProductsCard";
@@ -10,13 +9,40 @@ import ProductsCard from "../components/ProductsCard";
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function HomeScreen({navigation}){
-
+    const BedeIcon =withBadge()(Icon)
     const [delivery,setDelivery] = useState(true);
     const [indexCheck,setIndexCheck] = useState("0");
 
     return (
         <View style={styles.container}>
-           <HomeHeader/>
+           <View style={styles.header}>
+        <View style={{alignItems:'center',justifyContent:'center',marginLeft:15}}>
+            <Icon
+                type='material-community'
+                name="menu"
+                color='white'
+                size={32}
+            />
+        </View>
+        <View style={{alignItems:'center', justifyContent:'center'}}>
+            <Text style={{color:colors.cardbackground, fontSize:25, fontWeight:'bold'}}>Home</Text>
+        </View>
+        
+        <View style={{alignItems:'center', justifyContent:'center', marginRight:15}}>
+            <TouchableOpacity onPress={()=>{
+                   navigation.navigate('ChatScreen')
+               }}>
+            <BedeIcon
+                type='material-community'
+                name='heart'
+                size={35}
+                color='white'
+                
+            />
+           </TouchableOpacity>
+        </View>
+            
+     </View>
         <ScrollView
         stickyHeaderIndices={[0]}
         showsVerticalScrollIndicator={true}
@@ -48,7 +74,7 @@ export default function HomeScreen({navigation}){
                            color={colors.grey1}
                            size={26}
                        />
-                       <Text style={{marginLeft:5,color:colors.grey3}}>Search</Text>
+                       <Text style={{color:colors.grey3}}>Search</Text>
                    </View>
                </View>
                <View>
@@ -95,6 +121,7 @@ export default function HomeScreen({navigation}){
             </View>
 
             <View>
+            
             <FlatList 
                style ={{marginTop:10, marginBottom:10}} 
                horizontal ={true}
@@ -102,17 +129,23 @@ export default function HomeScreen({navigation}){
                keyExtractor = {(item,index)=>index.toString()}   
                showsHorizontalScrollIndicator = {false}
                renderItem = {({item})=>(
-                   <View style ={{marginRight:5}}>
+                
+                <View style ={{marginRight:5}}>
+                  
                        <ProductsCard 
                            screenWidth  ={SCREEN_WIDTH*0.8}
                            images ={item.images}
                            restaurantName ={item.restaurantName}
                            farAway ={item.farAway}
                            businessAddress ={item.businessAddress}
+                           
                        />
+                       
                    </View>
+                  
                )}  
             />
+            
             </View>
 
             <View style={{backgroundColor:colors.grey5,paddingVertical:10}}>
@@ -145,9 +178,17 @@ export default function HomeScreen({navigation}){
 };
 
 const styles= StyleSheet.create({
+    
     container:{
         flex:1,
        
+    },
+    header:{
+        flexDirection:'row',
+        backgroundColor:colors.button,
+        height:parameters.headerHeight,
+        marginTop:15,
+        justifyContent:'space-between'
     },
     deliveryButton:{
         paddingHorizontal:20,

@@ -10,6 +10,7 @@ import MyAccountScreen from '../screens/MyAccountScreen';
 
 
 
+
 const ClientTabs = createBottomTabNavigator();
 
 
@@ -70,10 +71,10 @@ export default function RootClientTabs(){
                 options ={
                     {
                         headerShown:false,
-                        tabBarLabel : "My Products",
+                        tabBarLabel : "Add Product",
                         tabBarIcon: ({color,size})=>(
                             <Icon 
-                                name ='view-list'
+                                name ='add'
                                 type = 'material'
                                 color ={color}
                                 size ={size}

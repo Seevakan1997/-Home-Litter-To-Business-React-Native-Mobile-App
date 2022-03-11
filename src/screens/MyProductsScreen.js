@@ -7,9 +7,11 @@ import { Button } from 'react-native-elements';
 import { getDownloadURL,ref,uploadBytes } from 'firebase/storage';
 import { colors,parameters } from '../global/Styles';
 import { addDoc,collection } from 'firebase/firestore';
+import AllProducts from './AllProducts';
+import Locate from '../components/location';
 
 
-const MyProductsScreen=()=>{
+const MyProductsScreen=({navigation})=>{
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
 
@@ -51,6 +53,7 @@ const MyProductsScreen=()=>{
           weight:weight,
           createAt: new Date(),
           titleImage: ImgUrl,
+          
           uid: auth.currentUser.uid,
           usermail: auth.currentUser.email
          
@@ -58,7 +61,7 @@ const MyProductsScreen=()=>{
   
       }).then(() => {
           Alert.alert('Successfully Added');
-          
+          navigation.navigate('AllProducts');
       })
   
   }
@@ -70,6 +73,7 @@ const MyProductsScreen=()=>{
       <View style={styles.container} >
        <View style={{alignItems:'center',marginBottom:20}}>
           <Text style={styles.text1}>Upload New Product</Text>
+          <Text style={styles.text1}>{Locate.text}</Text>
           </View>
       <TouchableOpacity onPress={pickImage} style={{ alignItems: 'center', height: 100, }} >
                     <Image source={{ uri: image }} style={styles.image}></Image>
@@ -131,9 +135,10 @@ const MyProductsScreen=()=>{
           >
 
           </TextInput>
+         
           
         </View>
-
+       
         <View style={{marginHorizontal:20, marginTop:20}}>
                 <Button
                     title='Submit'

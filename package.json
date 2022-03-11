@@ -17,7 +17,10 @@
     "@react-navigation/drawer": "^6.3.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.4.0",
+    "email-validator": "^2.0.4",
     "expo": "~44.0.0",
+    "expo-image-picker": "~12.0.1",
+    "expo-location": "~14.0.1",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.6",
     "formik": "^2.2.9",
@@ -33,7 +36,7 @@
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
-    "expo-image-picker": "~12.0.1"
+    "expo-facebook": "~12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

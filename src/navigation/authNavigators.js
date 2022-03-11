@@ -6,7 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SignUpScreen from "../screens/authScreens/SignUpScreen";
 import RootClientTabs from "./ClientTabs";
 import AllProducts from "../screens/AllProducts";
-
+import ChatScreen from "../screens/ChatScreen";
 
 const Auth = createNativeStackNavigator();
 
@@ -41,6 +41,14 @@ export default function AuthStack(){
             <Auth.Screen
                 name="AllProducts" 
                 component={AllProducts}
+                options={{
+                    headerShown:false,
+                   
+                }}
+            />
+             <Auth.Screen
+                name="ChatScreen" 
+                component={ChatScreen}
                 options={{
                     headerShown:false,
                    

@@ -7,9 +7,10 @@ import * as Animatable from 'react-native-animatable';
 import { Formik } from 'formik';
 import firebase,{ auth } from '../../../firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth'
-
-
-export default function SignInScreen({navigation}){
+import EmailValidator from 'email-validator'
+import onSignIn from '../../components/GoogleLogin';
+import logIn from './FacebookLogin';
+const SignInScreen=({navigation})=>{
 
         const [textInput2focussed,setTextInput2focussed]=useState(false)
         const textInput1=useRef(1)
@@ -60,12 +61,20 @@ export default function SignInScreen({navigation}){
             <View>
                 <View style={{marginTop:20}}>
                 <View>
-                    <TextInput style={styles.textInput1}
+                    <TextInput style={[styles.textInput1,
+                     
+                        {
+                            borderColor:
+                            values.email.length<1 || EmailValidator.validate(values.email)
+                            ? '#86939e'
+                            : 'red',
+                        },
+                    ]}
                     placeholder='Email'
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     value={values.email}
-                    
+                    ref={textInput1}
                     />
                 
                 </View>
@@ -82,7 +91,7 @@ export default function SignInScreen({navigation}){
                         style={{width:'80%'}} 
                             placeholder='Password'
                             ref={textInput2}
-                            ref={textInput1}
+                            
                             secureTextEntry={true}
                             onFocus={()=>{
                         setTextInput2focussed(false)
@@ -128,7 +137,7 @@ export default function SignInScreen({navigation}){
                     button
                     type='facebook'
                     style={styles.SocialIcon}
-                    onPress={()=>{}}
+                    onPress={logIn}
                 />
             </View>
             <View style={{marginHorizontal:10,marginTop:10}}>
@@ -137,7 +146,7 @@ export default function SignInScreen({navigation}){
                     button
                     type='google'
                     style={styles.SocialIcon}
-                    onPress={()=>{}}
+                    onPress={()=>onSignIn()}
                 />
             </View>
             <View style={{marginLeft:20,marginTop:15}}>
@@ -162,6 +171,7 @@ const styles=StyleSheet.create({
         marginTop:15,
         flex:1
     },
+    
     text1:{
         color:colors.grey3,
         fontSize:16
@@ -212,3 +222,5 @@ const styles=StyleSheet.create({
         marginTop:0
     }
 });
+
+export default SignInScreen;
