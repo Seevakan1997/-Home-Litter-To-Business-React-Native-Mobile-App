@@ -4,7 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { colors } from './src/global/Styles';
 import SignInScreen from './src/screens/authScreens/SignInScreen';
 import RootNavigator from './src/navigation/RootNavigator';
-import Locate from './src/components/location';
+import MapScreen from './src/screens/MapScreen';
+
 
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
         backgroundColor={colors.statusbar}
       />
       <RootNavigator/>
-      {/* <Locate/> */}
+      
     </View>
   );
 }

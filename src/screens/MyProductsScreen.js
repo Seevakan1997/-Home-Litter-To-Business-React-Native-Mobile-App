@@ -9,12 +9,12 @@ import { colors,parameters } from '../global/Styles';
 import { addDoc,collection } from 'firebase/firestore';
 import AllProducts from './AllProducts';
 import Locate from '../components/location';
-
+import { Ionicons } from '@expo/vector-icons';
 
 const MyProductsScreen=({navigation})=>{
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
-
+  const [Location,setLocation]= useState("");
     const pickImage = async () => {
  
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -71,9 +71,10 @@ const MyProductsScreen=({navigation})=>{
 
     return(
       <View style={styles.container} >
+      
        <View style={{alignItems:'center',marginBottom:20}}>
           <Text style={styles.text1}>Upload New Product</Text>
-          <Text style={styles.text1}>{Locate.text}</Text>
+          
           </View>
       <TouchableOpacity onPress={pickImage} style={{ alignItems: 'center', height: 100, }} >
                     <Image source={{ uri: image }} style={styles.image}></Image>
@@ -138,7 +139,15 @@ const MyProductsScreen=({navigation})=>{
          
           
         </View>
-       
+        <View style={{marginHorizontal:20, marginTop:20,justifyContent:'center',alignItems:'center'}}>
+                     <TouchableOpacity 
+                         onPress={()=>{navigation.navigate('MapScreen')
+                          }} style={{flexDirection:'row'}}>
+                          <Text style={{marginTop:5,color:colors.grey3}}>Add Location</Text>
+                         <Ionicons name="location" size={30} color="#12AD2B" />
+                         
+                      </TouchableOpacity>
+         </View>
         <View style={{marginHorizontal:20, marginTop:20}}>
                 <Button
                     title='Submit'
