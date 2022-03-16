@@ -8,13 +8,20 @@ import { getDownloadURL,ref,uploadBytes } from 'firebase/storage';
 import { colors,parameters } from '../global/Styles';
 import { addDoc,collection } from 'firebase/firestore';
 import AllProducts from './AllProducts';
-import Locate from '../components/location';
 import { Ionicons } from '@expo/vector-icons';
+import {pin} from './MapScreen';
+import { useRoute } from '@react-navigation/native';
 
-const MyProductsScreen=({navigation})=>{
+
+const MyProductsScreen=({navigation,route})=>{
+  React.useEffect(() => {
+    if (route.params?.pin) {
+      
+    }
+  }, [route.params?.pin]);
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
-  const [Location,setLocation]= useState("");
+  
     const pickImage = async () => {
  
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -147,6 +154,9 @@ const MyProductsScreen=({navigation})=>{
                          <Ionicons name="location" size={30} color="#12AD2B" />
                          
                       </TouchableOpacity>
+         </View>
+         <View>
+           <Text>pin:{route.params?.pin}</Text>
          </View>
         <View style={{marginHorizontal:20, marginTop:20}}>
                 <Button

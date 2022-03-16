@@ -8,6 +8,7 @@ import RootClientTabs from "./ClientTabs";
 import AllProducts from "../screens/AllProducts";
 import ChatScreen from "../screens/ChatScreen";
 import MapScreen from "../screens/MapScreen";
+import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 
 const Auth = createNativeStackNavigator();
 
@@ -55,7 +56,14 @@ export default function AuthStack(){
                    
                 }}
             />
-            
+            <Auth.Screen
+                name="ProductDetailsScreen" 
+                component={ProductDetailsScreen}
+                options={{
+                    headerShown:false,
+                   
+                }}
+            />
             <Auth.Screen
                 name="RootClientTabs" 
                 component={RootClientTabs}

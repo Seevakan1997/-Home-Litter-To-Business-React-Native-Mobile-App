@@ -6,9 +6,9 @@ import { Formik } from 'formik';
 import {Icon,Button} from 'react-native-elements'
 import * as Animatable from 'react-native-animatable';
 import { auth,db } from '../../../firebase';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithCredential  } from "firebase/auth";
 import { addDoc, collection, setDoc, doc } from '@firebase/firestore';
-
+import * as Google from 'expo-google-app-auth';
 
 
 const SignUpScreen = ({navigation}) => {
@@ -16,11 +16,65 @@ const SignUpScreen = ({navigation}) => {
 const[passwordFocussed, setPassordFocussed] = useState(false)
 const[passwordBlured,setPasswordBlured] = useState(false)
 
+//signUp with google
+const signInWithGoogle = async () => {
+  setindicator(true)
+  const { type, accessToken, user, idToken } = await Google.logInAsync(config);
+
+  if (type === 'success') {
+      const credential = GoogleAuthProvider.credential(idToken, accessToken);
+      await signInWithCredential(auth, credential);
+
+      try {
+
+          await setDoc(doc(db, 'users', auth.currentUser.uid), {
+              uid: auth.currentUser.uid,
+              username: user.name,
+              pro_pic: user.photoUrl,
+              email: user.email,
+              isOnline: true,
+
+          }).then(async () => {
+
+              Alert.alert('Successfully Registered')
+              await setDoc(doc(db, 'Follow', auth.currentUser.uid), {
+                  uid: auth.currentUser.uid,
+                  following: [],
+                  followers: [],
+
+              })
+              setindicator(false)
+
+
+          })
+
+      }
+      catch (error) {
+          Alert.alert(error);
+      }
+      /* Log-Out */
+      //   await Google.logOutAsync({ accessToken, ...config });
+      /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
+  }
+  return Promise.reject();
+}
+
+
+    // take random profile
+    const getRandomProfilePic = async () => {
+      const responce = await fetch('https://randomuser.me/api')
+      const data = await responce.json()
+
+      return data.results[0].picture.large
+
+  }
+
 const signUp = async (email,username,password) => {
     await createUserWithEmailAndPassword(auth, email, password)
     await setDoc(doc(db, 'users', auth.currentUser.uid), {
       owner_uid: auth.currentUser.uid,
       username: username,
+      pro_pic: await getRandomProfilePic(),
       email: email,
       isOnline: true,
     })

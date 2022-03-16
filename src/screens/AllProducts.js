@@ -44,7 +44,13 @@ export default function AllProducts({navigation}){
             <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
 
             {products && products.map((products) => (
-            <TouchableOpacity>
+            <TouchableOpacity key={products.id} onPress={()=>{navigation.navigate('ProductDetailsScreen',{
+                         productsId:products.id,
+                         productsImg:products.titleImage,
+                         productsName:products.name,
+                         productsWeight:products.weight,
+                         productsDesc:products.description
+                     })}}>
             <View key={products.id} style={styles.product}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.suggestImg} 
@@ -57,7 +63,13 @@ export default function AllProducts({navigation}){
                      <Text style={styles.weight}>{products.weight}</Text>
                 </View>
                 <View style={styles.actions}>
-                     <TouchableOpacity onPress={()=>{
+                     <TouchableOpacity key={products.id} onPress={()=>{navigation.navigate('ProductDetailsScreen',{
+                         productsId:products.id,
+                         productsImg:products.titleImage,
+                         productsName:products.name,
+                         productsWeight:products.weight,
+                         productsDesc:products.description
+                     })
                            
                         }}>
                        <Ionicons name="list" size={30} color="#12AD2B" />

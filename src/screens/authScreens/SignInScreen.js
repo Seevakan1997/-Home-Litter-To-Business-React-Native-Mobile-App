@@ -8,14 +8,66 @@ import { Formik } from 'formik';
 import firebase,{ auth } from '../../../firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import EmailValidator from 'email-validator'
+import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
 import onSignIn from '../../components/GoogleLogin';
 import logIn from './FacebookLogin';
+
 const SignInScreen=({navigation})=>{
 
         const [textInput2focussed,setTextInput2focussed]=useState(false)
         const textInput1=useRef(1)
         const textInput2=useRef(2)
+        const [indicater, setindicater] = useState(false)
 
+      
+        //signIn with google
+        const signInWithGoogle = async () => {
+            setindicater(true)
+            const { type, accessToken, user, idToken } = await Google.logInAsync();
+    
+            if (type === 'success') {
+                const credential = GoogleAuthProvider.credential(idToken, accessToken);
+                const res = await signInWithCredential(auth, credential);
+    
+    
+                try {
+    
+                    await setDoc(doc(db, 'users', auth.currentUser.uid), {
+                        uid: auth.currentUser.uid,
+                        username: user.name,
+                        pro_pic: user.photoUrl,
+                        email: user.email,
+                        isOnline: true,
+    
+                    }).then(async () => {
+    
+                        Alert.alert('Successfully Registered')
+                        await setDoc(doc(db, 'Follow', auth.currentUser.uid), {
+                            uid: auth.currentUser.uid,
+                            following: [],
+                            followers: [],
+    
+                        })
+                        setindicater(false)
+    
+    
+                    })
+    
+                }
+                catch (error) {
+                    Alert.alert(error);
+                }
+                /* Log-Out */
+                //   await Google.logOutAsync({ accessToken, ...config });
+                /* `accessToken` is now invalid and cannot be used to get data from the Google API with HTTP requests */
+            }
+            return Promise.reject();
+        }
+
+
+
+        //signIn with email pass
         const onLogin=async(email,password)=>{
             signInWithEmailAndPassword(auth, email, password)
            .then((re) => {
@@ -31,7 +83,8 @@ const SignInScreen=({navigation})=>{
                    {text: "Try again" }
                ])
         })
-    }    
+    }   
+     
 
 
     return(
@@ -146,7 +199,7 @@ const SignInScreen=({navigation})=>{
                     button
                     type='google'
                     style={styles.SocialIcon}
-                    onPress={()=>onSignIn()}
+                    onPress={signInWithGoogle}
                 />
             </View>
             <View style={{marginLeft:20,marginTop:15}}>
