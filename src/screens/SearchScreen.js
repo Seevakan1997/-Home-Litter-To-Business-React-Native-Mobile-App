@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {View, Text,StyleSheet,ScrollView,TouchableOpacity,Image,Button} from 'react-native';
+import {View, Text,StyleSheet,ScrollView,TouchableOpacity,Image,Button,TextInput} from 'react-native';
 import { colors } from '../global/Styles';
 import { auth,db } from '../../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
@@ -7,50 +7,142 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Icon,withBadge } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { SearchBar } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
 
 
 
 export default function SearchScreen({navigation}){
     const [products,setProducts] = useState()
     const BedeIcon =(Icon)
-    
-    useEffect(() => {
-        try {
-            const ref = collection(db, 'products')
-            onSnapshot(ref,(snapshots)=>{
-                let productsARR = [];
-                snapshots.docs.map((doc)=>{
 
-                    productsARR.push({...doc.data(),id:doc.id})
-                })
-              setProducts(productsARR)
+// Search
+const [enter, setEnter] = useState(false);
+const [masterArray, setMasterArrary] = useState(null)
+const [filterArray, setFilterArray] = useState(null)
+const [search,setSearch] = useState()
+
+   // get products
+   useEffect(() => {
+    try {
+        const ref = collection(db, 'products')
+        onSnapshot(ref, (snapshots) =>
+        {
+            setProducts((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            if (!masterArray)
+            {
+                setMasterArrary((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            }
+            if (!filterArray)
+            {
+                setFilterArray((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+               
+                }
+      
+        })
+        // console.log(masterArray)
+
+    
+    }
+    catch (error)
+    {
+
+        console.log("user not fetched")
+    }
+   
+})
+ // search filter
+ const SearchFilter = (text) => {
+    if (text)
+    {
+        setEnter(true)
+        const newData = masterArray.filter((item) => {
+            const itemData = item.name ? item.name.toUpperCase()
+                : "".toUpperCase();
+            const textData = text.toUpperCase()
+            return itemData.indexOf(textData) > -1
+        });
+        setFilterArray(newData)
+        setSearch(text)
+    }
+    else {
+        setEnter(false)
+        setFilterArray(masterArray)
+        setSearch(text)
+    }
+}
+     // display list
+     const ItemView = ({ item }) => {
+        return (
+            <TouchableOpacity onPress={() => {
+                    navigation.navigate('ProductDetailsScreen', {
+                        productsId:item.id,
+                         })   
+                }}>
+                <Text>{item.name}</Text>
+                
+            </TouchableOpacity>
             
-            })
+        )
+        
+    
+    }
+  //get products list  
+    // useEffect(() => {
+    //     try {
+    //         const ref = collection(db, 'products')
+    //         onSnapshot(ref,(snapshots)=>{
+    //             let productsARR = [];
+    //             snapshots.docs.map((doc)=>{
+
+    //                 productsARR.push({...doc.data(),id:doc.id})
+    //             })
+    //           setProducts(productsARR)
+            
+    //         })
 
              
-        } catch (error) {
+    //     } catch (error) {
 
-            let productsARR = [];
-            setProducts(productsARR)
+    //         let productsARR = [];
+    //         setProducts(productsARR)
 
-        }
+    //     }
         
 
-    }, []);
+    // }, []);
     
 
     return(
         <View style ={{flex:1,marginTop:20}}>
         <View style={{marginTop:10}}>
-           <SearchBar
-            returnKeyType='search'
-            lightTheme
-            placeholder='Search...'
-            onChangeText={(text) => this.setState({searchText:text})}
-            onSubmitEditing={() => this.firstSearch()}
-            />
+            {/* search */}
+          <View>
+                    
+                    <View >
+        
+                        <TextInput pointerEvents="none"
+                             placeholder='   Search Products'
+                            value={search}
+                          //   onTouchStart={() => setEnter("hi")}
+                            onChangeText={(value) => SearchFilter(value)}
+                          //   onEndEditing={() => setEnter(null)}
+                        >
+                            </TextInput>
+                         
+                    </View>
+                    
+                    {enter ? <View>
+                      <FlatList
+                          data={filterArray}
+                          keyExtractor={(products,index) => index.toString()}
+                          renderItem={ItemView}
+                          // ItemSeparatorComponent={ItemSpearatorView}
+                      />
+                  </View> : null}
+                    
+                </View>
           </View>
-          <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
+          {/* <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
 
             {products && products.map((products) => (
             <TouchableOpacity>
@@ -97,7 +189,7 @@ export default function SearchScreen({navigation}){
             ))}
 
             </ScrollView>
-            
+             */}
             
         </View>
     )

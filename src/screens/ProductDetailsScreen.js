@@ -2,6 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react'
 
 import {View, Text, StyleSheet, Button, Image, ScrollView} from 'react-native';
+import { colors } from '../global/Styles';
 
 
 export default function ProductDetailsScreen({navigation}){
@@ -14,7 +15,9 @@ export default function ProductDetailsScreen({navigation}){
         <View style={{paddingTop:30}} >
             <ScrollView>
                 <Image style={styles.image} source={{uri:productsImg}}/>
-                <View ></View>
+                <View style={styles.actions}>
+                <Text style={{fontSize:15,color:colors.button,fontWeight:'bold'}}>{productsName}</Text>
+                </View>
                 <Text style={styles.price}>~ {productsWeight}</Text>
                 <Text style={styles.description}>{productsDesc}</Text>
             </ScrollView>
@@ -30,7 +33,7 @@ const styles= StyleSheet.create({
     },
     actions:{
         marginVertical:10,
-        alignItems:'center'
+        alignItems:'center',
     },
     price:{
         fontSize:20,
