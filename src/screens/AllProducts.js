@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import {View, Text,StyleSheet,ScrollView,TouchableOpacity,ImageBackground,Image,Button} from 'react-native';
 import { colors } from '../global/Styles';
 import { auth,db } from '../../firebase';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where,addDoc } from 'firebase/firestore';
 import { NavigationContainer } from '@react-navigation/native';
 import { Icon,withBadge } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,7 +34,7 @@ export default function AllProducts({navigation}){
 
     }, [])
 
-
+ 
     return(
         <View style ={{flex:1,marginTop:20}}>
             <View style={{backgroundColor:colors.button,marginVertical:10}}>
@@ -81,9 +81,7 @@ export default function AllProducts({navigation}){
                        <Ionicons name="location" size={30} color="#12AD2B" />
                     </TouchableOpacity>
 
-                      <TouchableOpacity onPress={()=>{
-                            navigation.navigate('ChatScreen')
-                        }}>
+                      <TouchableOpacity >
                         <BedeIcon
                             type='material-community'
                             name='chat'

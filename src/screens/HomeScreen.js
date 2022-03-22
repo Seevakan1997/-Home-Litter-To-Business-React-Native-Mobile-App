@@ -4,7 +4,7 @@ import { Icon,withBadge } from 'react-native-elements';
 import { colors,parameters } from "../global/Styles";
 import { filterData,recyclableProducts,restaurantsData } from '../global/Data'
 import ProductsCard from "../components/ProductsCard";
-
+import { signOut } from "@firebase/auth";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -12,17 +12,27 @@ export default function HomeScreen({navigation}){
     const BedeIcon =withBadge()(Icon)
     const [delivery,setDelivery] = useState(true);
     const [indexCheck,setIndexCheck] = useState("0");
+    const SignOut = async () => {
+        await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+            isOnline: false,
+        });
+
+        await signOut(auth);
+
+    }
 
     return (
         <View style={styles.container}>
            <View style={styles.header}>
         <View style={{alignItems:'center',justifyContent:'center',marginLeft:15}}>
+           <TouchableOpacity onPress={()=>{navigation.replace('SignInScreen'),SignOut}}>
             <Icon
                 type='material-community'
-                name="menu"
+                name="logout"
                 color='white'
                 size={32}
             />
+            </TouchableOpacity>
         </View>
         <View style={{alignItems:'center', justifyContent:'center'}}>
             <Text style={{color:colors.cardbackground, fontSize:25, fontWeight:'bold'}}>Home</Text>
@@ -66,8 +76,10 @@ export default function HomeScreen({navigation}){
            </View>
         </View>
             <View style={styles.filterView}>
+            <TouchableOpacity  onPress={()=>{navigation.navigate('SearchScreen')}}>
                <View style={styles.searchView}>
                    <View style={{flexDirection:'row', alignItems:'center', paddingLeft:10}}>
+                    
                        <Icon
                            type='material'
                            name='search'
@@ -75,16 +87,14 @@ export default function HomeScreen({navigation}){
                            size={26}
                        />
                        <Text style={{color:colors.grey3}}>Search</Text>
+                      
+                       
                    </View>
                </View>
+               </TouchableOpacity>
                <View>
                
-                    <Icon
-                           type='material-community'
-                           name='tune'
-                           color={colors.grey1}
-                           size={26}
-                       />
+                   
                </View>
             </View>
             <View style={styles.headerTextView}>

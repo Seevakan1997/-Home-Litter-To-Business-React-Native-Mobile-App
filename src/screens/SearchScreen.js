@@ -73,94 +73,36 @@ const [search,setSearch] = useState()
      // display list
      const ItemView = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => {
-                    navigation.navigate('ProductDetailsScreen', {
-                        productsId:item.id,
-                         })   
-                }}>
-                <Text>{item.name}</Text>
+            <ScrollView>
+            <Text style={{paddingLeft:20}}>{item.name}</Text>
+            
+            <TouchableOpacity key={item.id} onPress={()=>{navigation.navigate('ProductDetailsScreen',{
+                         productsId:item.id,
+                         productsImg:item.titleImage,
+                         productsName:item.name,
+                         productsWeight:item.weight,
+                         productsDesc:item.description
+                     })}}>
                 
-            </TouchableOpacity>
-            
-        )
-        
-    
-    }
-  //get products list  
-    // useEffect(() => {
-    //     try {
-    //         const ref = collection(db, 'products')
-    //         onSnapshot(ref,(snapshots)=>{
-    //             let productsARR = [];
-    //             snapshots.docs.map((doc)=>{
-
-    //                 productsARR.push({...doc.data(),id:doc.id})
-    //             })
-    //           setProducts(productsARR)
-            
-    //         })
-
-             
-    //     } catch (error) {
-
-    //         let productsARR = [];
-    //         setProducts(productsARR)
-
-    //     }
-        
-
-    // }, []);
-    
-
-    return(
-        <View style ={{flex:1,marginTop:20}}>
-        <View style={{marginTop:10}}>
-            {/* search */}
-          <View>
-                    
-                    <View >
-        
-                        <TextInput pointerEvents="none"
-                             placeholder='   Search Products'
-                            value={search}
-                          //   onTouchStart={() => setEnter("hi")}
-                            onChangeText={(value) => SearchFilter(value)}
-                          //   onEndEditing={() => setEnter(null)}
-                        >
-                            </TextInput>
-                         
-                    </View>
-                    
-                    {enter ? <View>
-                      <FlatList
-                          data={filterArray}
-                          keyExtractor={(products,index) => index.toString()}
-                          renderItem={ItemView}
-                          // ItemSeparatorComponent={ItemSpearatorView}
-                      />
-                  </View> : null}
-                    
-                </View>
-          </View>
-          {/* <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
-
-            {products && products.map((products) => (
-            <TouchableOpacity>
-            <View key={products.id} style={styles.product}>
+                <View key={item.id} style={styles.product}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.suggestImg} 
-                        source={{uri:products.titleImage}}
+                        source={{uri:item.titleImage}}
                              />
                 </View>   
 
                 <View style={styles.details}>
-                     <Text style={styles.title}>{products.name}</Text>
-                     <Text style={styles.weight}>{products.weight}</Text>
+                     <Text style={styles.title}>{item.name}</Text>
+                     <Text style={styles.weight}>{item.weight}</Text>
                 </View>
                 <View style={styles.actions}>
-                     <TouchableOpacity onPress={()=>{
-                           
-                        }}>
+                     <TouchableOpacity key={item.id} onPress={()=>{navigation.navigate('ProductDetailsScreen',{
+                         productsId:item.id,
+                         productsImg:item.titleImage,
+                         productsName:item.name,
+                         productsWeight:item.weight,
+                         productsDesc:item.description
+                     })}}>
                        <Ionicons name="list" size={30} color="#12AD2B" />
                     </TouchableOpacity>
 
@@ -185,11 +127,49 @@ const [search,setSearch] = useState()
                         
                  
                 </View>
-                </TouchableOpacity>
-            ))}
-
+               
+                
+            </TouchableOpacity>
+           
+        
+         
+            
             </ScrollView>
-             */}
+        )
+    }
+  
+
+    return(
+        <View style ={{flex:1,marginTop:20}}>
+        <View style={{marginTop:20,}}>
+            {/* search */}
+          <View>
+                    
+                    <View style={{paddingLeft:20}}>
+        
+                        <TextInput pointerEvents="none"
+                             placeholder='   Search Products'
+                            value={search}
+                            fontSize={17}
+                            onChangeText={(value) => SearchFilter(value)}
+                          
+                        >
+                            </TextInput>
+                         
+                    </View>
+                    
+                    {enter ? <View>
+                      <FlatList
+                          data={filterArray}
+                          keyExtractor={(products,index) => index}
+                          renderItem={ItemView}
+                        
+                      />
+                  </View> : null}
+                    
+                </View>
+          </View>
+         
             
         </View>
     )
