@@ -25,16 +25,16 @@ const [search,setSearch] = useState()
    useEffect(() => {
     try {
         const ref = collection(db, 'products')
-        onSnapshot(ref, (snapshots) =>
+        onSnapshot(ref, (snapshot) =>
         {
-            setProducts((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+            setProducts((snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
             if (!masterArray)
             {
-                setMasterArrary((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+                setMasterArrary((snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
             }
             if (!filterArray)
             {
-                setFilterArray((snapshots.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+                setFilterArray((snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
                
                 }
       

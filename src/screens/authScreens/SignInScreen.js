@@ -5,13 +5,15 @@ import { Icon, Button,SocialIcon } from 'react-native-elements';
 import Header from '../../components/Header';
 import * as Animatable from 'react-native-animatable';
 import { Formik } from 'formik';
-import firebase,{ auth } from '../../../firebase';
+import firebase,{ auth,db } from '../../../firebase';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import EmailValidator from 'email-validator'
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 import onSignIn from '../../components/GoogleLogin';
 import logIn from './FacebookLogin';
+import { updateDoc,doc,setDoc } from 'firebase/firestore';
+
 
 const SignInScreen=({navigation})=>{
 
@@ -71,8 +73,12 @@ const SignInScreen=({navigation})=>{
         const onLogin=async(email,password)=>{
             signInWithEmailAndPassword(auth, email, password)
            .then((re) => {
+            updateDoc(doc(db, 'users', auth.currentUser.uid), {
+                isOnline: true,
+            });
                console.log("Sucessfully log in ");
                navigation.push("RootClientTabs");
+               
            })
            .catch((re) => {
                console.log(re.message);

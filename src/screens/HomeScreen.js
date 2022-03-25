@@ -5,6 +5,8 @@ import { colors,parameters } from "../global/Styles";
 import { filterData,recyclableProducts,restaurantsData } from '../global/Data'
 import ProductsCard from "../components/ProductsCard";
 import { signOut } from "@firebase/auth";
+import { updateDoc,doc } from "firebase/firestore";
+import { db,auth } from "../../firebase";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -12,6 +14,7 @@ export default function HomeScreen({navigation}){
     const BedeIcon =withBadge()(Icon)
     const [delivery,setDelivery] = useState(true);
     const [indexCheck,setIndexCheck] = useState("0");
+
     const SignOut = async () => {
         await updateDoc(doc(db, 'users', auth.currentUser.uid), {
             isOnline: false,
@@ -25,7 +28,7 @@ export default function HomeScreen({navigation}){
         <View style={styles.container}>
            <View style={styles.header}>
         <View style={{alignItems:'center',justifyContent:'center',marginLeft:15}}>
-           <TouchableOpacity onPress={()=>{navigation.replace('SignInScreen'),SignOut}}>
+           <TouchableOpacity onPress={SignOut}>
             <Icon
                 type='material-community'
                 name="logout"

@@ -10,12 +10,13 @@ import ChatScreen from "../screens/ChatScreen";
 import MapScreen from "../screens/MapScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 
+
+
 const Auth = createNativeStackNavigator();
 
-export default function AuthStack(){
-
-    return(
-        <Auth.Navigator>
+export const SignedInStack = () => (
+        
+        <Auth.Navigator initialRouteName='SignInWelcomeScreen' >
             <Auth.Screen
                 name="SignInWelcomeScreen" 
                 component={SignInWelcomeScreen}
@@ -84,4 +85,31 @@ export default function AuthStack(){
         </Auth.Navigator>
     )
 
-};
+    export const SignOutStack = () => (
+        <Auth.Navigator initialRouteName='SignInWelcomeScreen' >
+            <Auth.Screen
+                name="SignInWelcomeScreen" 
+                component={SignInWelcomeScreen}
+                options={{
+                    headerShown:false,
+                    
+                }}
+            />
+            <Auth.Screen
+                name="SignInScreen" 
+                component={SignInScreen}
+                options={{
+                    headerShown:false,
+                   
+                }}
+            />
+            <Auth.Screen
+                name="SignUpScreen" 
+                component={SignUpScreen}
+                options={{
+                    headerShown:false,
+                   
+                }}
+            />
+        </Auth.Navigator>
+    )
