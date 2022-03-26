@@ -7,18 +7,19 @@ import { Button } from 'react-native-elements';
 import { getDownloadURL,ref,uploadBytes } from 'firebase/storage';
 import { colors,parameters } from '../global/Styles';
 import { addDoc,collection } from 'firebase/firestore';
-import AllProducts from './AllProducts';
 import { Ionicons } from '@expo/vector-icons';
-import {pin} from './MapScreen';
-import { useRoute } from '@react-navigation/native';
+import * as Location from 'expo-location';
+import Locate from './Location';
+import MapScreen from './MapScreen';
 
+const MyProductsScreen=({navigation})=>{
+  
+    //location
+    // const [location, setLocation] = useState(null);
+    // const [errorMsg, setErrorMsg] = useState(null);
+    // const [latitude, setLatitude] = useState(null);
+    // const [longitude, setLongitude] = useState(null);
 
-const MyProductsScreen=({navigation,route})=>{
-  React.useEffect(() => {
-    if (route.params?.pin) {
-      
-    }
-  }, [route.params?.pin]);
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
   
@@ -51,6 +52,22 @@ const MyProductsScreen=({navigation,route})=>{
       }
       
     
+        //location useEffect
+        // useEffect(() => {
+        //   (async () => {
+        //     let { status } = await Location.requestForegroundPermissionsAsync();
+        //     if (status !== 'granted') {
+        //       setErrorMsg('Permission to access location was denied');
+        //       return;
+        //     }
+      
+        //     let location = await Location.getCurrentPositionAsync({});
+        //     // setLocation(location);
+        //     setLatitude(location.coords.latitude)
+        //     setLongitude(location.coords.longitude);
+        //     setLocation(location.coords);
+        //   })();
+        // }, []);
      
       
   
@@ -62,8 +79,9 @@ const MyProductsScreen=({navigation,route})=>{
           titleImage: ImgUrl,
           
           uid: auth.currentUser.uid,
-          usermail: auth.currentUser.email
-         
+          usermail: auth.currentUser.email,
+          latitude: latitude,
+          longitude:longitude
           
   
       }).then(() => {
@@ -156,7 +174,7 @@ const MyProductsScreen=({navigation,route})=>{
                       </TouchableOpacity>
          </View>
          <View>
-           <Text>pin:{route.params?.pin}</Text>
+           
          </View>
         <View style={{marginHorizontal:20, marginTop:20}}>
                 <Button

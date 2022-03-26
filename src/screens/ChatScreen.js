@@ -6,9 +6,12 @@ import CustomChatItems from '../components/CustomChatItems';
 import {db,auth} from '../../firebase';
 import { collection,where,onSnapshot, query } from 'firebase/firestore';
 import User from '../components/User';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ChatScreen() {
+    const navigation = useNavigation();
     const [users,setUsers] = useState([])
+    const [chat,setChat]= useState("")
 
     useEffect(()=>{
         
@@ -29,7 +32,13 @@ export default function ChatScreen() {
         return ()=> unsub();
 
     },[]);
-    console.log(users);
+    // console.log(users);
+
+    const selectUser= (user)=>{
+        console.log(user);
+    }
+
+
     return (
         <View style ={{flex:1,marginTop:20}}>
             <View style={{backgroundColor:colors.button,marginVertical:10}}>
@@ -37,7 +46,7 @@ export default function ChatScreen() {
             </View>
             
             <View >
-                {users && users.map(user =><User key={user.uid} user={user}/>)}
+                {users && users.map(user =><User navigation={navigation} key={user.uid} user={user} selectUser={selectUser} />)}
                 
             </View>
             {/* <CustomChatItems/> */}

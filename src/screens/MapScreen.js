@@ -45,7 +45,7 @@ export default function MapScreen({navigation,route}) {
               title = "Add Location"
               buttonStyle = {styles.button1}
               titleStyle ={styles.title1}
-              onPress = {()=>{navigation. goBack('MyProductsScreen',{params:{pin:pin}})}}
+              onPress = {()=>{navigation. goBack('MyProductsScreen')}}
         />
        </View>
     </View>
