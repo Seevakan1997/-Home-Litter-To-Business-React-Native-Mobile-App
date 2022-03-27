@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native'
 const User = ({user,selectUser,navigation})=>{
     const uploadImage = "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
     return(
-        <TouchableOpacity onPress={()=>{ selectUser(user),navigation.navigate('Message',{selectUserId:user.id,
+        <TouchableOpacity onPress={()=>{ selectUser(user),navigation.navigate('Message',{selectUserId:user.owner_uid,
          selectUserName:user.username
         })}}>
         <View style={{flexDirection:'row',borderBottomWidth:1}}>
