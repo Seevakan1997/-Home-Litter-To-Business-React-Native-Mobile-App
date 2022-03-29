@@ -4,7 +4,7 @@ import ChatUsers from '../screens/chat/ChatUsers';
 import { colors } from '../global/Styles';
 import CustomChatItems from '../components/CustomChatItems';
 import {db,auth} from '../../firebase';
-import { collection,where,onSnapshot, query,addDoc, Timestamp } from 'firebase/firestore';
+import { collection,where,onSnapshot, query,addDoc, Timestamp, orderBy } from 'firebase/firestore';
 import User from '../components/User';
 import { useNavigation } from '@react-navigation/native';
 
@@ -39,6 +39,12 @@ export default function ChatScreen() {
 
     const selectUser= (user)=>{
         console.log(user);
+        // const user2 = user.uid
+        // const id = user1 > user2 ? '${user1+user2}' : '${user2+user1}'
+
+        // const msgsRef = collection(db,'messages', id, 'chat')
+        // const q = query(msgsRef,orderBy(''))
+
     }
 
     // const handleSubmit = async e =>{
