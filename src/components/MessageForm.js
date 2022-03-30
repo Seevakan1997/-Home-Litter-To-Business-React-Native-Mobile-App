@@ -9,7 +9,7 @@ const MessageForm = ({handleSubmit,text,setText})=>{
     return (
         <SafeAreaView>
         
-        
+        <View>
             <View style={styles.textInput}>
                 <TextInput  multiline={true} placeholder='Type a message...' value={text} onChangeText={(text)=> setText(text)}/>
                 
@@ -22,7 +22,7 @@ const MessageForm = ({handleSubmit,text,setText})=>{
                     />
                  </View>
             </View>
-          
+            </View>
         </SafeAreaView>
         
     )
@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         paddingLeft:30,
-        backgroundColor:colors.grey5
+        backgroundColor:colors.grey5,
+        paddingBottom:0,
     },
     buttonTitle:{
         color:'#12AD2B',

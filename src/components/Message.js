@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import { StyleSheet, Text, View,Keyboard,FlatList } from 'react-native';
+import { StyleSheet, Text, View,Keyboard,FlatList,ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {colors} from '../global/Styles';
 import MessageForm from "./MessageForm";
@@ -39,7 +39,7 @@ const Message = ()=>{
             let chats = [];
             setchats(chats);
         }
-        console.log(chats)
+        // console.log(chats)
     }, [])
     
     
@@ -65,30 +65,29 @@ const Message = ()=>{
     
     return(
         <View>
-        <View style={{alignItems:'center',marginTop:30}} >
-            
-            <Text style={{alignItems:'center',fontSize:50,color:colors.button,paddingBottom:10}}>{selectUserName}</Text>
-            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                   
-            {(chats && user1) &&
-                <FlatList
-                                inverted={1}
+        
+            <View style={{alignItems:'center',marginTop:30}} >
+            <Text style={{alignItems:'center',fontSize:50,color:colors.button}}>{selectUserName}</Text>
+            </View>
+            <ScrollView>
+            <View>
+                {<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        {(chats && user1) &&
+                            <FlatList
+                                inverted={-1}
                                 data={chats}
                                 keyExtractor={(chats) => chats.id}
-                                renderItem={({ item }) => <ChatGetMessages user1={user1} key={item.id} chats={item} />}
+                                renderItem={({ item }) => <ChatGetMessages key={item.id} chats={item} user1={user1}/>}
 
                             />
-                           
                         }
-                    
+                        </TouchableWithoutFeedback>}
                 </View>
-                {/* <View>
-                    {chats.length ? chats.map((chat,i)=> <ChatGetMessages key={i} chat={chat}/>):null}
-                </View> */}
-            <View style={{paddingTop:550}}>
-            <MessageForm handleSubmit={handleSubmit} text={text} setText={setText}/>
+                </ScrollView>
+            
+            <View style={{paddingBottom:0,position:'absolute'}}>
+                <MessageForm handleSubmit={handleSubmit} text={text} setText={setText}/>
             </View>
-        </View>
         </View>
     )
 }
