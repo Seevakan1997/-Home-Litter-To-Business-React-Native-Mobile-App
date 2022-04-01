@@ -66,11 +66,12 @@ const Message = ()=>{
     return(
         <View>
         
-            <View style={{alignItems:'center',marginTop:30}} >
+            <View style={{alignItems:'center',paddingTop:30}} >
             <Text style={{alignItems:'center',fontSize:50,color:colors.button}}>{selectUserName}</Text>
             </View>
+            
             <ScrollView>
-            <View>
+            <View style={{paddingTop:10}}>
                 {<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         {(chats && user1) &&
                             <FlatList
@@ -85,10 +86,11 @@ const Message = ()=>{
                 </View>
                 </ScrollView>
             
-            <View style={{paddingBottom:0,position:'absolute'}}>
+                <View style={{paddingBottom:0,position:'absolute',paddingTop:648}}>
                 <MessageForm handleSubmit={handleSubmit} text={text} setText={setText}/>
             </View>
         </View>
+       
     )
 }
 

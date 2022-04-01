@@ -7,7 +7,7 @@ import { colors, parameters } from "../global/Styles";
 const MessageForm = ({handleSubmit,text,setText})=>{
   
     return (
-        <SafeAreaView>
+        <SafeAreaView >
         
         <View>
             <View style={styles.textInput}>
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         paddingLeft:30,
         backgroundColor:colors.grey5,
-        paddingBottom:0,
+       
+        paddingVertical:10
     },
     buttonTitle:{
         color:'#12AD2B',
