@@ -8,7 +8,7 @@ import { db,auth } from "../../firebase";
 import ChatGetMessages from "./ChatGetMessages";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-const Message = ()=>{
+const Message = ({navigation})=>{
     const route = useRoute();
     const {selectUserId,selectUserName}= route.params;
     const [text,setText] = useState("")

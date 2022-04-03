@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {View, Text,StyleSheet,Image,TouchableOpacity,TextInput,Alert} from 'react-native'
+import {View, Text,StyleSheet,Image,TouchableOpacity,TextInput,Alert,ScrollView} from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import { Formik } from 'formik';
 import { auth,db,storage } from '../../firebase';
@@ -15,10 +15,10 @@ import MapScreen from './MapScreen';
 const MyProductsScreen=({navigation})=>{
   
     //location
-    // const [location, setLocation] = useState(null);
-    // const [errorMsg, setErrorMsg] = useState(null);
-    // const [latitude, setLatitude] = useState(null);
-    // const [longitude, setLongitude] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
 
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
@@ -40,7 +40,7 @@ const MyProductsScreen=({navigation})=>{
       }
     };
   
-    const AddSubmit = async (name, description, weight) => {
+    const AddSubmit = async (name, description, weight,phoneNo) => {
       let ImgUrl;
         if (image) {
           const response1 = await fetch(image);
@@ -77,11 +77,11 @@ const MyProductsScreen=({navigation})=>{
           weight:weight,
           createAt: new Date(),
           titleImage: ImgUrl,
-          
+          phoneNo:phoneNo,
           uid: auth.currentUser.uid,
           usermail: auth.currentUser.email,
-          latitude: latitude,
-          longitude:longitude
+          // latitude: latitude,
+          // longitude:longitude
           
   
       }).then(() => {
@@ -95,6 +95,7 @@ const MyProductsScreen=({navigation})=>{
 
 
     return(
+      <ScrollView>
       <View style={styles.container} >
       
        <View style={{alignItems:'center',marginBottom:20}}>
@@ -105,9 +106,9 @@ const MyProductsScreen=({navigation})=>{
                     <Image source={{ uri: image }} style={styles.image}></Image>
             </TouchableOpacity>
       <Formik  
-          initialValues={{name:'', description:'', weight:''}}
+          initialValues={{name:'', description:'', weight:'',phoneNo:''}}
           onSubmit={values=> {
-                AddSubmit(values.name, values.description, values.weight);
+                AddSubmit(values.name, values.description, values.weight,values.phoneNo);
             } }
         
             
@@ -161,7 +162,15 @@ const MyProductsScreen=({navigation})=>{
           >
 
           </TextInput>
-         
+          <TextInput 
+          style={styles.textInput1}
+          placeholder='Phone Number'
+          onChangeText={handleChange('phoneNo')}
+          onBlur={handleBlur('phoneNo')}
+          value={values.phoneNo}
+          >
+
+          </TextInput>
           
         </View>
         <View style={{marginHorizontal:20, marginTop:20,justifyContent:'center',alignItems:'center'}}>
@@ -192,6 +201,7 @@ const MyProductsScreen=({navigation})=>{
         )}
         </Formik>
         </View>
+        </ScrollView>
     )
 }
 

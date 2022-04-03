@@ -133,6 +133,7 @@ export default function HomeScreen({navigation}){
                 <Text style={styles.headerText}>Exchanges for Organic Wastage</Text>
             </View>
 
+         
             <View>
             
             <FlatList 
@@ -144,7 +145,7 @@ export default function HomeScreen({navigation}){
                renderItem = {({item})=>(
                 
                 <View style ={{marginRight:5}}>
-                  
+                   
                        <ProductsCard 
                            screenWidth  ={SCREEN_WIDTH*0.8}
                            images ={item.images}
@@ -155,12 +156,12 @@ export default function HomeScreen({navigation}){
                        />
                        
                    </View>
-                  
+                   
                )}  
             />
             
             </View>
-
+           
             <View style={{backgroundColor:colors.grey5,paddingVertical:10}}>
                 <Text style={styles.headerText}>Exchanges for Recyclable Wastage</Text>
             </View>

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import React,{useEffect,useState} from 'react';
-import ChatUsers from '../screens/chat/ChatUsers';
+
 import { colors } from '../global/Styles';
 import CustomChatItems from '../components/CustomChatItems';
 import {db,auth} from '../../firebase';

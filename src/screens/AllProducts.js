@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function AllProducts({navigation}){
     const [products,setProducts] = useState()
     const BedeIcon =(Icon)
+   
     useEffect(() => {
         try {
             const ref = collection(db, 'products')
@@ -49,6 +50,7 @@ export default function AllProducts({navigation}){
                          productsImg:products.titleImage,
                          productsName:products.name,
                          productsWeight:products.weight,
+                         phoneNumber:products.phoneNo,
                          productsDesc:products.description
                      })}}>
             <View key={products.id} style={styles.product}>
@@ -68,6 +70,7 @@ export default function AllProducts({navigation}){
                          productsImg:products.titleImage,
                          productsName:products.name,
                          productsWeight:products.weight,
+                         phoneNumber:products.phoneNo,
                          productsDesc:products.description
                      })
                            
@@ -81,7 +84,9 @@ export default function AllProducts({navigation}){
                        <Ionicons name="location" size={30} color="#12AD2B" />
                     </TouchableOpacity>
 
-                      <TouchableOpacity >
+                    <TouchableOpacity onPress={()=>{navigation.navigate('Message',{
+                          selectUserId:products.uid,
+                      })}} >
                         <BedeIcon
                             type='material-community'
                             name='chat'
@@ -90,6 +95,7 @@ export default function AllProducts({navigation}){
                             
                         />
                     </TouchableOpacity>
+                  
                 </View>
                         
                  
