@@ -4,10 +4,12 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import { colors } from '../global/Styles';
 
-export default function MapScreen({navigation,route}) {
+export default function MapScreen({navigation,route }) {
 
     const [pin,setPin]= useState({latitude: 7.95,
         longitude: 80.670837})
+    const [latitude, setLatitude] = useState();
+    const [longitude, setLongitude] = useState();
 
   return (
     <View style={styles.container}>
@@ -24,7 +26,8 @@ export default function MapScreen({navigation,route}) {
                 draggable={true}
                 onDragStart={(e)=>{
                     console.log("Drag Start",e.nativeEvent.coordinate);
-                    
+                    setLatitude(e.nativeEvent.coordinate.latitude)
+                    setLongitude(e.nativeEvent.coordinate.longitude);
                 }}
                 onDragEnd={(e)=>{
                   setPin({
@@ -41,11 +44,15 @@ export default function MapScreen({navigation,route}) {
             
        </MapView>
        <View style ={styles.view17}>
+    
         <Button
               title = "Add Location"
               buttonStyle = {styles.button1}
               titleStyle ={styles.title1}
-              onPress = {()=>{navigation. goBack('MyProductsScreen')}}
+              onPress = {()=>{navigation. navigate('MyProductsScreen',{
+                Latitude:latitude,
+                Longitude:longitude
+              })}}
         />
        </View>
     </View>

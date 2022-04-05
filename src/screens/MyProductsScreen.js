@@ -11,18 +11,17 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import Locate from './Location';
 import MapScreen from './MapScreen';
+import { useRoute } from '@react-navigation/native';
 
 const MyProductsScreen=({navigation})=>{
-  
-    //location
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [latitude, setLatitude] = useState(null);
-    const [longitude, setLongitude] = useState(null);
 
   const uploadImage = 'https://www.babypillowth.com/images/templates/upload.png'
   const [image, setImage] = useState(uploadImage);
-  
+  const route = useRoute();
+  const location= route.params;
+
+  // {console.log(location)}
+
     const pickImage = async () => {
  
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -80,8 +79,8 @@ const MyProductsScreen=({navigation})=>{
           phoneNo:phoneNo,
           uid: auth.currentUser.uid,
           usermail: auth.currentUser.email,
-          // latitude: latitude,
-          // longitude:longitude
+          latitude: location.Latitude,
+          longitude:location.Longitude
           
   
       }).then(() => {
