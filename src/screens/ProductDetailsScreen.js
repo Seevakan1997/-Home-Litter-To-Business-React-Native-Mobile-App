@@ -7,7 +7,7 @@ import { Icon,withBadge } from 'react-native-elements';
 
 export default function ProductDetailsScreen({navigation}){
      const route = useRoute();
-     const {productsId,productsImg,productsName,productsWeight,phoneNumber,productsDesc}= route.params;
+     const {productsId,productsImg,productsName,productsWeight,phoneNumber,productsDesc,productsLatitude,productsLongitude}= route.params;
      const BedeIcon =(Icon)
     
     return(
@@ -41,10 +41,23 @@ export default function ProductDetailsScreen({navigation}){
                             
                         />
                         <TouchableOpacity >
-                        <Text style={{paddingLeft:20,paddingTop:5}}>Chat</Text>
-                    
-                    
+                        <Text style={{paddingLeft:20,paddingTop:5}}>Chat</Text>  
                 </TouchableOpacity>
+                </View>
+
+                <View style={styles.phoneNo} >
+                <Ionicons name="location"  size={30} color="#12AD2B" />
+                    <TouchableOpacity onPress={()=>{navigation.navigate('ShowMapScreen',{
+                         productsLatitude:productsLatitude,
+                         productsLongitude:productsLongitude
+                     })
+                           
+                        }}>
+                       
+                       <Text style={{paddingTop:5,paddingLeft:20}}>Location</Text> 
+                    </TouchableOpacity>
+                
+
                 </View>
             </ScrollView>
         </View>

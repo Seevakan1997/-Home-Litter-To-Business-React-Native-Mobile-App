@@ -51,7 +51,9 @@ export default function AllProducts({navigation}){
                          productsName:products.name,
                          productsWeight:products.weight,
                          phoneNumber:products.phoneNo,
-                         productsDesc:products.description
+                         productsDesc:products.description,
+                         productsLatitude:products.latitude,
+                         productsLongitude:products.longitude
                      })}}>
             <View key={products.id} style={styles.product}>
                 <View style={styles.imageContainer}>
@@ -71,14 +73,19 @@ export default function AllProducts({navigation}){
                          productsName:products.name,
                          productsWeight:products.weight,
                          phoneNumber:products.phoneNo,
-                         productsDesc:products.description
+                         productsDesc:products.description,
+                         productsLatitude:products.latitude,
+                         productsLongitude:products.longitude
                      })
                            
                         }}>
                        <Ionicons name="list" size={30} color="#12AD2B" />
                     </TouchableOpacity>
 
-                     <TouchableOpacity onPress={()=>{
+                     <TouchableOpacity onPress={()=>{navigation.navigate('ShowMapScreen',{
+                         productsLatitude:products.latitude,
+                         productsLongitude:products.longitude
+                     })
                            
                         }}>
                        <Ionicons name="location" size={30} color="#12AD2B" />

@@ -10,6 +10,7 @@ import ChatScreen from "../screens/ChatScreen";
 import MapScreen from "../screens/MapScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 import Message from "../components/Message";
+import ShowMapScreen from "../screens/ShowMapScreen";
 
 
 const Auth = createNativeStackNavigator();
@@ -86,6 +87,14 @@ export const SignedInStack = () => (
              <Auth.Screen
                 name="Message" 
                 component={Message}
+                options={{
+                    headerShown:false,
+                   
+                }}
+            />
+            <Auth.Screen
+                name="ShowMapScreen" 
+                component={ShowMapScreen}
                 options={{
                     headerShown:false,
                    
