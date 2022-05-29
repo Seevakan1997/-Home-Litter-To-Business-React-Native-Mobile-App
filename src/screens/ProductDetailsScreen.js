@@ -7,13 +7,14 @@ import { Icon,withBadge } from 'react-native-elements';
 
 export default function ProductDetailsScreen({navigation}){
      const route = useRoute();
-     const {productsId,productsImg,productsName,productsWeight,phoneNumber,productsDesc,productsLatitude,productsLongitude}= route.params;
+     const {ProductUid,productsId,productsImg,productsName,productsWeight,phoneNumber,productsDesc,productsLatitude,productsLongitude}= route.params;
      const BedeIcon =(Icon)
-    
+    // console.log(ProductUid);
+
     return(
         <View style ={{flex:1}}>
         <View style={{paddingTop:30}} >
-            <ScrollView>
+            <ScrollView >
                 <Image style={styles.image} source={{uri:productsImg}}/>
                 <View style={styles.actions}>
                 <Text style={{fontSize:15,color:colors.button,fontWeight:'bold'}}>{productsName}</Text>
@@ -26,10 +27,12 @@ export default function ProductDetailsScreen({navigation}){
                 </View>
 
                 <View style={styles.phoneNo}>
-                <Ionicons name="call" size={30} color="#12AD2B" />
-                <Text style={{paddingLeft:20,paddingTop:5}}>{phoneNumber}</Text>
+                    <Ionicons name="call" size={30} color="#12AD2B" />
+                    <Text style={{paddingLeft:20,paddingTop:5}}>{phoneNumber}</Text>
                 </View>
-                <View style={styles.phoneNo} >
+                <TouchableOpacity  style={styles.phoneNo} onPress={()=>{navigation.navigate('Message',{
+                          selectUserId:ProductUid,
+                      })}} >
                     
                    
                     
@@ -40,10 +43,10 @@ export default function ProductDetailsScreen({navigation}){
                             color='#12AD2B'
                             
                         />
-                        <TouchableOpacity >
+                       
                         <Text style={{paddingLeft:20,paddingTop:5}}>Chat</Text>  
+               
                 </TouchableOpacity>
-                </View>
 
                 <View style={styles.phoneNo} >
                 <Ionicons name="location"  size={30} color="#12AD2B" />
@@ -71,14 +74,14 @@ const styles= StyleSheet.create({
         height:300
     },
     actions:{
-        marginVertical:10,
+        marginTop:10,
         alignItems:'center',
     },
     price:{
         fontSize:20,
         color:'#888',
         textAlign:'center',
-        marginVertical:20
+        marginVertical:10
     },
     description:{
         fontSize:15,

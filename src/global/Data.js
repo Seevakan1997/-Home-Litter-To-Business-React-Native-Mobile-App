@@ -22,7 +22,7 @@ export const restaurantsData = [
     id:0},
     
     {restaurantName:"Fruits", farAway:"12.7",businessAddress:"22 Bessie street, Cape Town",
-    images:'https://fos.cmb.ac.lk/blog/wp-content/uploads/2021/06/picture-of-fruits.jpg',
+    images:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2LyZeqfc6mzllmp2vqwt-ef5bplo2AQ33HQ&usqp=CAU',
     averageReview:4.3, numberOfReview:306, coordinates : {lat: -26.1891648, lng: 28.2441808},
     discount:20,deliveryTime:30,collectTime:10, foodType:"Chicken,Chicken wings... ",
     productData:[{name:"Hand cut chips", price:29.30,image:"https://bukasapics.s3.us-east-2.amazonaws.com/plate5.png"},

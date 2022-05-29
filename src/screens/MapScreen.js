@@ -8,8 +8,8 @@ export default function MapScreen({navigation,route }) {
 
     const [pin,setPin]= useState({latitude: 7.95,
         longitude: 80.670837})
-    const [latitude, setLatitude] = useState();
-    const [longitude, setLongitude] = useState();
+    const [Latitude, setLatitude] = useState();
+    const [Longitude, setLongitude] = useState();
 
   return (
     <View style={styles.container}>
@@ -50,8 +50,8 @@ export default function MapScreen({navigation,route }) {
               buttonStyle = {styles.button1}
               titleStyle ={styles.title1}
               onPress = {()=>{navigation. navigate('MyProductsScreen',{
-                Latitude:latitude,
-                Longitude:longitude
+                Latitude:Latitude,
+                Longitude:Longitude
               })}}
         />
        </View>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
                       
   },
   view17:{marginVertical:5,
-    marginBottom:30,
+    marginBottom:60,
    
   },
   map: {

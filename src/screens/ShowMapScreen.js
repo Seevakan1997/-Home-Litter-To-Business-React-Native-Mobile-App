@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
                       
   },
   view17:{marginVertical:5,
-    marginBottom:30,
+    marginBottom:60,
    
   },
   map: {

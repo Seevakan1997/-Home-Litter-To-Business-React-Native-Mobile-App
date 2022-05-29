@@ -6,6 +6,7 @@ import { collection, onSnapshot, query, where,addDoc } from 'firebase/firestore'
 import { NavigationContainer } from '@react-navigation/native';
 import { Icon,withBadge } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import Header from '../components/Header';
 
 export default function AllProducts({navigation}){
     const [products,setProducts] = useState()
@@ -38,15 +39,17 @@ export default function AllProducts({navigation}){
  
     return(
         <View style ={{flex:1,marginTop:20}}>
-            <View style={{backgroundColor:colors.button,marginVertical:10}}>
-                <Text style={styles.headerText}>All Products</Text>
+            <View style={{backgroundColor:colors.button,flexDirection:'row'}}>
+           
+            <Header title='All Products' type='arrow-left' navigation={navigation}/>
             </View>
 
-            <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
+            <ScrollView nestedScrollEnabled={true} vertical={true} showsVerticalScrollIndicator={false}>
 
             {products && products.map((products) => (
             <TouchableOpacity key={products.id} onPress={()=>{navigation.navigate('ProductDetailsScreen',{
                          productsId:products.id,
+                         ProductUid:products.uid,
                          productsImg:products.titleImage,
                          productsName:products.name,
                          productsWeight:products.weight,
@@ -124,7 +127,8 @@ const styles= StyleSheet.create({
         color:colors.headerText,
         fontSize:22,
         fontWeight:'bold',
-        marginTop:10
+        marginTop:10,
+        
     },
     suggestImg: {
         width:'100%',

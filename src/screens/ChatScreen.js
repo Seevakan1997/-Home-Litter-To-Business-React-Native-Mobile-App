@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,ScrollView } from 'react-native';
 import React,{useEffect,useState} from 'react';
 
 import { colors } from '../global/Styles';
-import CustomChatItems from '../components/CustomChatItems';
+
 import {db,auth} from '../../firebase';
 import { collection,where,onSnapshot, query,addDoc, Timestamp, orderBy } from 'firebase/firestore';
 import User from '../components/User';
@@ -45,7 +45,7 @@ export default function ChatScreen() {
 
     return (
         <View style ={{flex:1,marginTop:20}}>
-            <View style={{backgroundColor:colors.button,marginVertical:10}}>
+            <View style={{backgroundColor:colors.button,marginBottom:10}}>
                 <Text style={styles.headerText}>Chats</Text>
             </View>
             <ScrollView>

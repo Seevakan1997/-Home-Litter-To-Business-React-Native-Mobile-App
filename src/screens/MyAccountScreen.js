@@ -8,8 +8,10 @@ import { db,storage,auth } from '../../firebase';
 import { doc,updateDoc,collection,onSnapshot} from 'firebase/firestore';
 import { AntDesign } from '@expo/vector-icons';
 
+
 const MyAccountScreen = ({navigation}) => {
-  const uploadImage = "https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+  const uploadImage = "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png";
+  
   // const [image, setImage] = useState(null);
   const [user, setuser] = useState();
 
@@ -105,7 +107,10 @@ const MyAccountScreen = ({navigation}) => {
         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginTop: 100 }}>
           <TouchableOpacity onPress={pickImage} style={{ alignItems: 'center', height: 100, }} >
 
-            <Image source={{ uri: user ? user.profile_pic : uploadImage }} style={{ width: 100, height: '100%', resizeMode: 'contain', borderRadius: 20 }}></Image>
+            {/* <Image source={{ uri: user ? user.profile_pic : uploadImage }} style={{ width: 100, height: '100%', resizeMode: 'contain', borderRadius: 20 }}/> */}
+
+{user ? <Image source={{ uri: user.profile_pic}} style={{ width: 100, height: '100%', resizeMode: 'contain', borderRadius: 20 }}/>:<Image source={{ uri:uploadImage }} style={{ width: 100, height: '100%', resizeMode: 'contain', borderRadius: 20 }}/>}
+
 
           </TouchableOpacity>
 
@@ -121,17 +126,14 @@ const MyAccountScreen = ({navigation}) => {
       </View>
 
       <View style={styles.userInfoSection}>
-        <View style={styles.row}>
-          <Icon name="map-marker-radius" color="#777777" size={20} />
-          <Text style={{ color: "#777777", marginLeft: 20, fontSize: 20 }}>Batticaloa</Text>
-        </View>
+        
         
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20} />
          {user &&  <Text style={{ color: "#777777", marginLeft: 20, fontSize: 20 }}>{user.email}</Text> }
         </View>
       </View>
-
+    
      
 
       <View style={styles.menuWrapper}>

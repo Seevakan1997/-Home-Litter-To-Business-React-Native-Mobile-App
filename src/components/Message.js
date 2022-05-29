@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from "react";
-import { StyleSheet, Text, View,Keyboard,FlatList,ScrollView } from 'react-native';
+import { StyleSheet, Text, View,Keyboard,FlatList,ScrollView,Image } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {colors} from '../global/Styles';
 import MessageForm from "./MessageForm";
-import {  addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, updateDoc,doc } from 'firebase/firestore';
+import {  addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, updateDoc,doc, where } from 'firebase/firestore';
 import { db,auth } from "../../firebase";
 import ChatGetMessages from "./ChatGetMessages";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -12,14 +12,20 @@ const Message = ({navigation})=>{
     const route = useRoute();
     const {selectUserId,selectUserName}= route.params;
     const [text,setText] = useState("")
-    const [chats, setchats] = useState([])
+    const [chats, setchats] = useState()
+
+   const [usedetails, setusedetails] = useState()
     const user1 = auth.currentUser.uid
+    const user2=selectUserId;
+    // console.log(user2);
+    // console.log(user1);
+    
     useEffect(() => {
 
         try {
 
-            const user1 = auth.currentUser.uid
-            const user2 = selectUserId
+            // const user1 = auth.currentUser.uid
+            // const user2 = selectUserId
             const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
 
 
@@ -42,6 +48,31 @@ const Message = ({navigation})=>{
         // console.log(chats)
     }, [])
     
+
+   
+    
+      useEffect(() => {
+
+    const ref = collection(db, "users")
+    const qref=query(ref, where('owner_uid','==',user2))
+    onSnapshot(qref, (snapshot) => {
+        let users=[];
+        snapshot.docs.map((doc)=>{
+users.push(doc.data())
+    })
+        
+    //   console.log(users)
+
+      setusedetails(users)
+
+    })
+    // console.log(user)
+
+   
+           
+          
+         
+      }, [user2])
     
   
 
@@ -65,13 +96,20 @@ const Message = ({navigation})=>{
     
     return(
         <View>
-        
-            <View style={{alignItems:'center',paddingTop:30}} >
-            <Text style={{alignItems:'center',fontSize:50,color:colors.button}}>{selectUserName}</Text>
-            </View>
+      
+      {usedetails &&     <View style={{alignItems:'center',backgroundColor:colors.button,paddingHorizontal:20,paddingVertical:20, flexDirection:'row',}} >
+            {/* <Text style={{alignItems:'center',fontSize:50,color:colors.button}}>{selectUserName}</Text> */}
+          
+
+<Image source={{uri:usedetails[0].profile_pic}} style={{height:50, width:50, borderRadius:50,marginTop:10,marginLeft:10}} />
+   <Text style={{fontSize:30,color:'white',marginTop:20,marginLeft:30}}>{usedetails[0].username}</Text>
+   
+     
+            </View>}
             
-            <ScrollView>
+            <ScrollView  >
             <View style={{paddingTop:10}}>
+            
                 {<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         {(chats && user1) &&
                             <FlatList
@@ -84,9 +122,9 @@ const Message = ({navigation})=>{
                         }
                         </TouchableWithoutFeedback>}
                 </View>
-                </ScrollView>
+                </ScrollView> 
             
-                <View style={{paddingBottom:0,position:'absolute',paddingTop:648}}>
+                 <View style={{paddingBottom:0,position:'absolute',top:600}}>
                 <MessageForm handleSubmit={handleSubmit} text={text} setText={setText}/>
             </View>
         </View>

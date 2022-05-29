@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         borderRadius:10,
         height:40,
         paddingHorizontal:20,
-        width:'70%'
+        width:'100%'
     },
     textInput:{
         alignItems:'center',

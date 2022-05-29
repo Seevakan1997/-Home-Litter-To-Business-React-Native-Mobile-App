@@ -104,6 +104,16 @@ const signUp = async (email,username,password) => {
                             <View>
                                 <Text style ={styles.text2}>New to Exchange ?</Text>
                             </View>
+                               
+                               <View style ={styles.view6}>
+                                  <TextInput 
+                                    placeholder = "Name"
+                                    style = {styles.input1}
+                                    autoFocus = {true}
+                                    onChangeText = {handleChange('username')}
+                                    value = {values.username}
+                                  />
+                               </View>
                                <View style ={styles.view6}>
                                   <TextInput 
                                     placeholder = "Mobile Number"
@@ -114,16 +124,6 @@ const signUp = async (email,username,password) => {
                                     value = {values.phoneno}
                                   />
                                </View>
-                               <View style ={styles.view6}>
-                                  <TextInput 
-                                    placeholder = "Name"
-                                    style = {styles.input1}
-                                    autoFocus = {true}
-                                    onChangeText = {handleChange('username')}
-                                    value = {values.username}
-                                  />
-                               </View>
-
                              
                                <View style ={styles.view10}>
                                   <View>
