@@ -17,7 +17,7 @@ export default function Header({title,type,navigation}){
                     onPress={()=>{navigation.goBack()}}
                 />
             </View>
-            <View>
+            <View style={{paddingHorizontal:50}}>
                 <Text style={styles.headerText}>{title}</Text>
             </View>
         </View>

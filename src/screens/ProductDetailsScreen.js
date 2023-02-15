@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {View, Text, StyleSheet, Button, Image, ScrollView,TouchableOpacity} from 'react-native';
 import { colors } from '../global/Styles';
 import { Icon,withBadge } from 'react-native-elements';
+import Header from '../components/Header';
 
 export default function ProductDetailsScreen({navigation}){
      const route = useRoute();
@@ -13,8 +14,11 @@ export default function ProductDetailsScreen({navigation}){
 
     return(
         <View style ={{flex:1}}>
-        <View style={{paddingTop:30}} >
-            <ScrollView >
+        {/* <Header type='arrow-left' navigation={navigation} style={{paddingTop:10}}/> */}
+
+        <View style={{paddingTop:5}} >
+
+            <ScrollView nestedScrollEnabled={true} vertical={true} showsVerticalScrollIndicator={false}>
                 <Image style={styles.image} source={{uri:productsImg}}/>
                 <View style={styles.actions}>
                 <Text style={{fontSize:15,color:colors.button,fontWeight:'bold'}}>{productsName}</Text>
@@ -30,11 +34,8 @@ export default function ProductDetailsScreen({navigation}){
                     <Ionicons name="call" size={30} color="#12AD2B" />
                     <Text style={{paddingLeft:20,paddingTop:5}}>{phoneNumber}</Text>
                 </View>
-                <TouchableOpacity  style={styles.phoneNo} onPress={()=>{navigation.navigate('Message',{
-                          selectUserId:ProductUid,
-                      })}} >
+                <TouchableOpacity  style={styles.phoneNo} onPress={()=>{navigation.navigate('Message',{selectUserId:ProductUid})}} >
                     
-                   
                     
                         <BedeIcon
                             type='material-community'

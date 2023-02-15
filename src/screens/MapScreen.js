@@ -31,8 +31,8 @@ export default function MapScreen({navigation,route }) {
                 }}
                 onDragEnd={(e)=>{
                   setPin({
-                    latitude: e.nativeEvent.coordinate.latitude,
-                    longitude: e.nativeEvent.coordinate.longitude
+                    Latitude: e.nativeEvent.coordinate.latitude,
+                    Longitude: e.nativeEvent.coordinate.longitude
                   })
                 }}
                 

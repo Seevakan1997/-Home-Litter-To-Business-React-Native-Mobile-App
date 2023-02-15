@@ -7,6 +7,8 @@ import {  addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, updat
 import { db,auth } from "../../firebase";
 import ChatGetMessages from "./ChatGetMessages";
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import Header from '../components/Header';
+
 
 const Message = ({navigation})=>{
     const route = useRoute();
@@ -99,10 +101,12 @@ users.push(doc.data())
       
       {usedetails &&     <View style={{alignItems:'center',backgroundColor:colors.button,paddingHorizontal:20,paddingVertical:20, flexDirection:'row',}} >
             {/* <Text style={{alignItems:'center',fontSize:50,color:colors.button}}>{selectUserName}</Text> */}
-          
+          <View style={{backgroundColor:colors.button,flexDirection:'row',justifyContent:'space-around',alignItems:'center',}}>
+            <Header type='arrow-left' navigation={navigation}/>
+            <Text style={{fontSize:30,color:'white',marginTop:20,marginRight:10}}>{usedetails[0].username}</Text>
+        </View>
+<Image source={{uri:usedetails[0].profile_pic}} style={{height:50, width:50, borderRadius:50,marginTop:10,marginRight:10}} />
 
-<Image source={{uri:usedetails[0].profile_pic}} style={{height:50, width:50, borderRadius:50,marginTop:10,marginLeft:10}} />
-   <Text style={{fontSize:30,color:'white',marginTop:20,marginLeft:30}}>{usedetails[0].username}</Text>
    
      
             </View>}

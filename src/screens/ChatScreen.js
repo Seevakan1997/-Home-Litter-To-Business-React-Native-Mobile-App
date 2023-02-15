@@ -7,6 +7,7 @@ import {db,auth} from '../../firebase';
 import { collection,where,onSnapshot, query,addDoc, Timestamp, orderBy } from 'firebase/firestore';
 import User from '../components/User';
 import { useNavigation } from '@react-navigation/native';
+import Header from '../components/Header';
 
 export default function ChatScreen() {
     const navigation = useNavigation();
@@ -18,17 +19,29 @@ export default function ChatScreen() {
     useEffect(()=>{
         
         const usersRef= collection(db,'users')
+        // const chat= collection(usersRef,'chat')
+
+        // const chat= query(usersRef,where(id,'chat'))
+        // console.log(chat);
+    //   const q = query(usersRef,where('to',"not-in",[user1]));
 
         // create query object
         const q = query(usersRef, where("owner_uid","not-in",[user1]));
-
         // execute query
         const unsub = onSnapshot(q,(querySnapshot)=>{
             let users =[];
             querySnapshot.forEach((doc)=>{
                 users.push(doc.data())
-            });
-            setUsers(users);
+        // querySnapshot.docs.map((doc)=>{
+            
+        //     users.push({...doc.data()})
+        //     console.log(users.push({...doc.data()}),'hello')
+            
+            // console.log('hello');
+        // })
+    });
+    setUsers(users);
+        
         });
     
         return ()=> unsub();
@@ -46,7 +59,8 @@ export default function ChatScreen() {
     return (
         <View style ={{flex:1,marginTop:20}}>
             <View style={{backgroundColor:colors.button,marginBottom:10}}>
-                <Text style={styles.headerText}>Chats</Text>
+                {/* <Text style={styles.headerText}>Chats</Text> */}
+                <Header title='Chats' type='arrow-left' navigation={navigation}/>
             </View>
             <ScrollView>
             <View  >

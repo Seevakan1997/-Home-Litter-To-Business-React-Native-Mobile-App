@@ -1,5 +1,5 @@
 import React, {useState,useRef} from 'react';
-import {View, Text, StyleSheet, Dimentions, TextInput, Alert} from 'react-native';
+import {View, Text, StyleSheet, Dimentions, TextInput, Alert,ScrollView} from 'react-native';
 import {colors, parameters,title} from '../../global/Styles';
 import { Icon, Button,SocialIcon } from 'react-native-elements';
 import Header from '../../components/Header';
@@ -98,6 +98,8 @@ const SignInScreen=({navigation})=>{
         <View style={styles.container}>
 
             <Header title='My Account' type='arrow-left' navigation={navigation}/>
+           <ScrollView keyboardShouldPersistTaps = "always">
+
             <View>
                 <Text style={title}>Sign In</Text>
             </View>
@@ -220,7 +222,7 @@ const SignInScreen=({navigation})=>{
                     onPress={()=>{navigation.navigate('SignUpScreen')}}
                 />
             </View>
-
+</ScrollView>
         </View>
     );
 };

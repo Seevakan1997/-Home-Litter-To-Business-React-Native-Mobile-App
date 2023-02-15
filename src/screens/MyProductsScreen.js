@@ -176,7 +176,7 @@ const MyProductsScreen=({navigation})=>{
                      <TouchableOpacity 
                          onPress={()=>{navigation.navigate('MapScreen')
                           }} style={{flexDirection:'row'}}>
-                          <Text style={{marginTop:5,color:colors.grey3}}>Add Location</Text>
+                          <Text style={{marginTop:5,color:colors.grey3}}>Location</Text>
                          <Ionicons name="location" size={30} color="#12AD2B" />
                          
                       </TouchableOpacity>
