@@ -19,6 +19,11 @@ const MyProductsScreen=({navigation})=>{
   const [image, setImage] = useState(uploadImage);
   const route = useRoute();
   const location= route.params;
+  const [selectedOption, setSelectedOption] = useState('organic');
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+  };
 
   // {console.log(location)}
 
@@ -80,7 +85,8 @@ const MyProductsScreen=({navigation})=>{
           uid: auth.currentUser.uid,
           usermail: auth.currentUser.email,
           latitude: location.Latitude,
-          longitude:location.Longitude
+          longitude:location.Longitude,
+          selectedOption: selectedOption,
           
   
       }).then(() => {
@@ -132,6 +138,23 @@ const MyProductsScreen=({navigation})=>{
             
           </TouchableOpacity>
         </View>
+
+        <View style={styles.radioCon}>
+        <View style={styles.radioContainer}>
+          <TouchableOpacity style={styles.radio} onPress={() => handleOptionSelect('organic')}>
+            {selectedOption === 'organic' && <View style={styles.radioInner} />}
+          </TouchableOpacity>
+          <Text style={styles.radioLabel}>Organic</Text>
+        </View>
+
+        <View style={styles.radioContainer}>
+          <TouchableOpacity style={styles.radio} onPress={() => handleOptionSelect('inorganic')}>
+            {selectedOption === 'inorganic' && <View style={styles.radioInner} />}
+          </TouchableOpacity>
+          <Text style={styles.radioLabel}>Inorganic</Text>
+        </View>
+          {/* <Text>You have selected {selectedOption}</Text> */}
+      </View>
 
         <View>
           <TextInput 
@@ -238,6 +261,35 @@ const styles= StyleSheet.create({
        width: '100%', 
        resizeMode: 'contain', 
        borderRadius: 20 
+    },
+    radioContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 10,
+      marginHorizontal:40
+    },
+    radio: {
+      height: 24,
+      width: 24,
+      borderRadius: 12,
+      borderWidth: 2,
+      borderColor: '#000',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: 10,
+    },
+    radioInner: {
+      height: 12,
+      width: 12,
+      borderRadius: 6,
+      backgroundColor: '#000',
+    },
+    radioLabel: {
+      fontSize: 16,
+    },
+    radioCon:{
+     
+    display: "flex", flexDirection: "row"
     }
     
     

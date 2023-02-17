@@ -1,12 +1,14 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import {View, Text, StyleSheet, TouchableOpacity,ScrollView,FlatList,Pressable,Image,Dimensions} from 'react-native';
 import { Icon,withBadge } from 'react-native-elements';
 import { colors,parameters } from "../global/Styles";
 import { filterData,recyclableProducts,restaurantsData } from '../global/Data'
 import ProductsCard from "../components/ProductsCard";
 import { signOut } from "@firebase/auth";
-import { updateDoc,doc } from "firebase/firestore";
+import { updateDoc,doc,collection,onSnapshot, where, query } from "firebase/firestore";
 import { db,auth } from "../../firebase";
+// import { doc,updateDoc,} from 'firebase/firestore';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -14,6 +16,10 @@ export default function HomeScreen({navigation}){
     const BedeIcon =withBadge()(Icon)
     const [delivery,setDelivery] = useState(true);
     const [indexCheck,setIndexCheck] = useState("0");
+    const [organicProducts,setProducts] = useState();
+    const [inorganicProducts,setInorgProducts] = useState();
+
+
 
     const SignOut = async () => {
         await updateDoc(doc(db, 'users', auth.currentUser.uid), {
@@ -23,6 +29,41 @@ export default function HomeScreen({navigation}){
         await signOut(auth);
 
     }
+
+    useEffect(() => {
+            const ref = collection(db, 'products')
+           
+          const q = query(ref,where('selectedOption','==','organic'))
+            onSnapshot(q,(snapshots)=>{
+                let productsARR = [];
+                snapshots.docs.map((doc)=>{
+    
+                    productsARR.push({...doc.data()})
+                    // console.log(productsARR.push({...doc.data()}))
+    
+                })
+                
+              setProducts(productsARR)
+            
+            });
+            const q1 = query(ref,where('selectedOption','==','inorganic'))
+            onSnapshot(q1,(snapshots)=>{
+                let productsARR = [];
+                snapshots.docs.map((doc)=>{
+    
+                    productsARR.push({...doc.data()})
+                    // console.log(productsARR.push({...doc.data()}))
+    
+                })
+                
+              setInorgProducts(productsARR)
+            
+            });
+            // return () => {
+            //     unsubscribeOrganic();
+            //     unsubscribeInorganic();
+            //   };
+            }, []);
 
     return (
         <View style={styles.container}>
@@ -135,31 +176,19 @@ export default function HomeScreen({navigation}){
 
          
             <View>
-            
-            <FlatList 
-               style ={{marginTop:10, marginBottom:10}} 
-               horizontal ={true}
-               data = {restaurantsData}
-               keyExtractor = {(item,index)=>index.toString()}   
-               showsHorizontalScrollIndicator = {false}
-               renderItem = {({item})=>(
-                
-                <View style ={{marginRight:5}}>
-                   
-                       <ProductsCard 
-                           screenWidth  ={SCREEN_WIDTH*0.8}
-                           images ={item.images}
-                           restaurantName ={item.restaurantName}
-                           farAway ={item.farAway}
-                           businessAddress ={item.businessAddress}
-                           
-                       />
-                       
-                   </View>
-                   
-               )}  
-            />
-            
+            <ScrollView horizontal={true}>
+            {organicProducts && organicProducts.map((product, index) => (
+                <View key={index} style={{marginTop: 10, marginBottom: 10}}>
+                <ProductsCard 
+                    screenWidth={SCREEN_WIDTH * 0.8}
+                    images={product.titleImage}
+                    productName={product.name}
+                    weight ={product.weight + ' '+'of wastage.'}
+                    
+                />
+                </View>
+            ))}
+            </ScrollView>    
             </View>
            
             <View style={{backgroundColor:colors.grey5,paddingVertical:10}}>
@@ -167,24 +196,19 @@ export default function HomeScreen({navigation}){
             </View>
 
             <View>
-            <FlatList 
-               style ={{marginTop:10, marginBottom:10}} 
-               horizontal ={true}
-               data = {recyclableProducts}
-               keyExtractor = {(item,index)=>index.toString()}   
-               showsHorizontalScrollIndicator = {false}
-               renderItem = {({item})=>(
-                   <View style ={{marginRight:5}}>
-                       <ProductsCard 
-                           screenWidth  ={SCREEN_WIDTH*0.8}
-                           images ={item.images}
-                           restaurantName ={item.restaurantName}
-                           farAway ={item.farAway}
-                           businessAddress ={item.businessAddress}
-                       />
-                   </View>
-               )}  
-            />
+                <ScrollView horizontal={true}>
+                {inorganicProducts && inorganicProducts.map((product, index) => (
+                    <View key={index} style={{marginTop: 10, marginBottom: 10}}>
+                    <ProductsCard 
+                        screenWidth={SCREEN_WIDTH * 0.8}
+                        images={product.titleImage}
+                        productName={product.name}
+                        weight ={product.weight + ' '+'of wastage.'}
+                        
+                    />
+                    </View>
+                ))}
+                </ScrollView> 
             </View>
            </ScrollView>
         </View>

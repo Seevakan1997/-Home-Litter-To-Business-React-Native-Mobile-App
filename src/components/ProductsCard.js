@@ -4,15 +4,9 @@ import { Icon } from "react-native-elements";
 import {colors,parameters} from '../global/Styles';
 
 export default function ProductsCard({
-        OnPressFoodCard,
-        restaurantName,
-        deliveryAvailable,
-        discountAvailable ,
-        discountPercent ,
-        numberOfReview ,
-        businessAddress ,
+        productName,
+        weight ,
         farAway ,
-        averageReview ,
         images,
         screenWidth
     }){
@@ -27,7 +21,7 @@ export default function ProductsCard({
     
                  <View>
                     <View>
-                        <Text style ={styles.restaurantName}>{restaurantName}</Text>
+                        <Text style ={styles.productName}>{productName}</Text>
                     </View>
     
                     <View style ={{flex:1, flexDirection:"row"}}>
@@ -42,11 +36,11 @@ export default function ProductsCard({
                                 marginTop:3
                             }}
                         />
-                        <Text style ={styles.Min}> {farAway} Min</Text>
+                        <Text style ={styles.Min}> {farAway}</Text>
                         </View>
     
                         <View style ={{flex:9, flexDirection:"row"}}>
-                            <Text style ={styles.address}>{businessAddress}</Text>
+                            <Text style ={styles.address}>{weight}</Text>
                         </View>
     
                     </View>
@@ -79,7 +73,7 @@ export default function ProductsCard({
                 height:150,
              },
     
-             restaurantName:{
+             productName:{
                 fontSize:17,
                 fontWeight:'bold',
                 color:colors.grey1,  
